@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggered on tags starting with 'v', e.g., v0.1.0, v1.2.3
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    
+    # Required permissions to create a release and upload assets
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v10.3.3
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v7.1.0
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Build package distributions (sdist & wheel)
+        run: uv build
+
+      - name: Create GitHub Release and Upload Assets
+        uses: softprops/action-gh-release@v3.0.0
+        with:
+          files: |
+            dist/*.whl
+            dist/*.tar.gz         generate_release_notes: true # Automatically generates release notes from PRs/commits
+          draft: false
+          prerelease: false

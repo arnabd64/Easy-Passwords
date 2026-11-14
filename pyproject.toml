@@ -1,0 +1,35 @@
+[project]
+name = "easy-passwords"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "cryptography>=50.0.2,<51.0.0",
+]
+
+
+[tool.uv]
+add-bounds = "major"
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.170.15,<7.0.0",
+    "pytest>=9.2.0,<10.0.0",
+    "pytest-cov>=7.1.0,<8.0.0",
+    "ruff>=0.17.4,<0.18.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=easy_passwords --cov-report=term-missing --cov-fail-under=100"
+
+[tool.coverage.run]
+source = ["easy_passwords"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+]
