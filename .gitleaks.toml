@@ -1,0 +1,12 @@
+title = "Easy-Passwords gitleaks config"
+
+[extend]
+# Keep all of Gitleaks' built-in rules
+useDefault = true
+
+[[allowlists]]
+description = "Fake passwords and example hashes used as test fixtures"
+paths = ['''^tests/''']
+# Once you know the rule that fired (see "RuleID" in the job log),
+# narrow this so other rules still scan tests/:
+# targetRules = ["generic-api-key"]
